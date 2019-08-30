@@ -86,6 +86,12 @@ namespace SoftifyGEO.API
             }
             app.UseAuthentication();
             app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseMvc(routes => routes.MapSpaFallbackRoute(
+                name: "spa-fallback",
+                defaults: new { Controller = "Fallback", action = "Index" }
+            ));
             app.UseMvc();
         }
     }
