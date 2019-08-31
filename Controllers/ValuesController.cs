@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Sampan;
 
 namespace SoftifyGEO.API.Controllers
 {
@@ -18,11 +19,11 @@ namespace SoftifyGEO.API.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
+        //[HttpGet("{id}")]
+        //public ActionResult<string> Get(int id)
+        //{
+        //    return "value";
+        //}
 
         // POST api/values
         [HttpPost]
@@ -40,6 +41,21 @@ namespace SoftifyGEO.API.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        //// POST api/values
+        [HttpGet("ProductSave{id}")]
+        public ActionResult<string> Get(int id)
+        {
+            CoreSQLConnection CoreSQL = new CoreSQLConnection();
+            var Query = "select cast( dbo.fnc_CheckInOutSatus('" + id + "') AS float)  AS ProductId";
+            var NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
+
+            if (NewId > 0)
+                return Ok("CheckOut");
+            else
+                return Ok("CheckIn");
+
         }
     }
 }

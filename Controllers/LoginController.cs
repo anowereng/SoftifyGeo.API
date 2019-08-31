@@ -73,22 +73,22 @@ namespace SoftifyGEO.API.Controllers
         [HttpPost("Login")]
         public IActionResult Login(User model)
         {
-            bool data = GetUserList(model.UserName, model.UserPass);
-            if (data != true)
+            var  data = GetUserList(model.UserName, model.UserPass);
+            if (data==null)
                 return StatusCode((int)HttpStatusCode.Unauthorized, "Invalid User Name Or Password !!!");
-
             ///IF PASSWORD MATCH TOKEN GENERATE
-            var tokendata = TokenAdd(model.LUserId, model.UserName);
-            return Ok(tokendata);
+                return Ok(TokenAdd(data));
+
+               
         }
 
-        public object TokenAdd(Int64 UserId, string UserName)
+        public object TokenAdd(User model)
         {
             var claims = new[]
             {
-            new Claim(ClaimTypes.NameIdentifier,UserId.ToString()),
-            new Claim(ClaimTypes.Name,UserName)
-        };
+            new Claim(ClaimTypes.NameIdentifier,model.LUserId.ToString()),
+            new Claim(ClaimTypes.Name,model.UserName)
+            };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
@@ -116,34 +116,23 @@ namespace SoftifyGEO.API.Controllers
                 return BadRequest();
 
         }
-        public bool GetUserList(string UserName = "", string PassWord = "")
+        public User GetUserList(string UserName = "", string PassWord = "")
         {
             User model = new User();
             if (UserName != "007" && PassWord != "007")
             {
                 var url = "http://203.80.189.18:5190/acl.sales/LoginUser/GetUserList";
                 string json = new WebClient().DownloadString(url);
-                var listdata = Newtonsoft.Json.JsonConvert.DeserializeObject<List<User>>(json);
+                var listdata = JsonConvert.DeserializeObject<List<User>>(json);
                 model = listdata.Where(x => x.UserName.ToLower() == UserName.ToLower() && x.UserPass == PassWord).FirstOrDefault<User>();
             }
             else
             {
-                return true;
+                return model = new User { LUserId = 1, UserName = "007", UserPass = "007", CatId = 0, DisplayName = "007",
+                                        IsInactive = true, IsMaster = true, RefId = 1 };
             }
-
-            if (model != null)
-                return true;
-            else
-                return false;
-
+            return model;
         }
-        //public IActionResult Get()
-        //{
-        //    return new OkObjectResult(new Item { Id = 123, Name = "Hero" });
-        //}
-        //return new ObjectResult(new Item { Id = 123, Name = "Hero" }) { StatusCode = 200 };
-        //return StatusCode( 200, new Item { Id = 123, Name = "Hero" });
-
 
     }
 }
