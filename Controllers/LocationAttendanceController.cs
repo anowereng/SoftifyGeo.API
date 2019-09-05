@@ -7,9 +7,12 @@ using Sampan;
 using SoftifyGEO.API.Models;
 using SoftifyGEO.API.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace SoftifyGEO.API.Controllers
 {
+
     [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
@@ -17,22 +20,23 @@ namespace SoftifyGEO.API.Controllers
     {
         
         // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //[HttpGet]
+        //public ActionResult<IEnumerable<string>> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         //GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
+        //[HttpGet("{id}")]
+        //public ActionResult<string> Get(int id)
+        //{
+        //    return "value";
+        //}
 
-        // POST api/values
-        [HttpPost]
-        public IActionResult Post([FromBody] LocationAttendance model)
+
+
+        [HttpPost("AttendanceSave")]
+        public IActionResult AttendanceSave([FromBody]LocationAttendance model)
         {
             if (model.AttendanceSave(model) == "Success")
                 return Ok();
@@ -53,6 +57,18 @@ namespace SoftifyGEO.API.Controllers
         {
         }
 
+        [HttpGet("{id}")]
+        public ActionResult  Get(int id)
+        {
+            var data = new List<string>();
+            CoreSQLConnection CoreSQL = new CoreSQLConnection();
+            var Query = "select cast( dbo.fnc_CheckInOutSatus('" + id + "') AS float)  AS ProductId";
+            var NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
+            if (NewId == 0)
+            return Ok(JsonConvert.SerializeObject("CheckIn"));
+            else
+            return Ok(JsonConvert.SerializeObject("CheckOut"));
+        }
 
         //// POST api/values
         //[HttpGet("CheckInOutStatus")]
@@ -69,7 +85,7 @@ namespace SoftifyGEO.API.Controllers
 
         //}
 
-     
+
 
     }
 }
