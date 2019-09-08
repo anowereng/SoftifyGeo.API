@@ -18,6 +18,11 @@ namespace SoftifyGEO.API.Helpers
             public string Name { get; set; }
         }
 
+        internal static void JsonSerialize(object p)
+        {
+            throw new NotImplementedException();
+        }
+
         public class clsCombo2
         {
             public Int64 Id { get; set; }
