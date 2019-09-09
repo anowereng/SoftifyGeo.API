@@ -24,11 +24,11 @@ namespace SoftifyGEO.API.Controllers
     {
 
         [HttpGet("{searchdata}")]
-        public ActionResult Get(string searchdata="Hello")
+        public ActionResult Get(string searchdata="")
         {
             CustomerCheckInOut _lQuery = new CustomerCheckInOut();
             //return Ok(searchdata);
-            var list = _lQuery.GetCustomer(searchdata);
+            var list = _lQuery.GetCustomer(searchdata.ToLower());
             if (list != null)
                 return Ok(list);
             else

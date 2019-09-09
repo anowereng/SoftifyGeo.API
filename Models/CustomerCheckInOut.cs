@@ -9,6 +9,17 @@ namespace SoftifyGEO.API.Models
 {
     public class CustomerCheckInOut 
     {
+
+
+        public int CustomerId { get; set; }
+        public int CustomerName { get; set; }
+        public int CustomerType { get; set; }
+        public int SearchValue { get; set; }
+        public int UserId { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
+        public string Address { get; set; }
+
         public static DataSet dsList = new DataSet();
         public string GetCustomer(string searchdata)
         {
