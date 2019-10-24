@@ -19,16 +19,17 @@ namespace SoftifyGEO.API.Controllers
         }
 
         // GET api/values/5
-        //[HttpGet("{id}")]
-        //public ActionResult<string> Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet("{id}")]
+        public ActionResult<string> Get(int id)
+        {
+            return "value";
+        }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public string Post([FromBody] string value)
         {
+            return "value";
         }
 
         // PUT api/values/5
@@ -44,18 +45,18 @@ namespace SoftifyGEO.API.Controllers
         }
 
         //// POST api/values
-        [HttpGet("ProductSave{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            CoreSQLConnection CoreSQL = new CoreSQLConnection();
-            var Query = "select cast( dbo.fnc_CheckInOutSatus('" + id + "') AS float)  AS ProductId";
-            var NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
+        //[HttpGet("ProductSave{id}")]
+        //public ActionResult<string> Get(int id)
+        //{
+        //    CoreSQLConnection CoreSQL = new CoreSQLConnection();
+        //    var Query = "select cast( dbo.fnc_CheckInOutSatus('" + id + "') AS float)  AS ProductId";
+        //    var NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
 
-            if (NewId > 0)
-                return Ok("CheckOut");
-            else
-                return Ok("CheckIn");
+        //    if (NewId > 0)
+        //        return Ok("CheckOut");
+        //    else
+        //        return Ok("CheckIn");
 
-        }
+        //}
     }
 }
