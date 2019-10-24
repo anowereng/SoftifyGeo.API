@@ -25,9 +25,10 @@ namespace SoftifyGEO.API.Models
         {
             CoreSQLConnection CoreSQL = new CoreSQLConnection();
             dsList = new DataSet();
-            string strQuery = "Exec prcGet_CustomerList " + searchdata;
+            string strQuery = "Exec [prcGet_CustomerBySearch] " + searchdata;
             dsList = CoreSQL.CoreSQL_GetDataSet(strQuery);
             return clsCommon.JsonSerialize(dsList.Tables[0]);
         }
+
     }
 }
