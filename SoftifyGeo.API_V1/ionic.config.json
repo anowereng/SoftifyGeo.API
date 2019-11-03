@@ -1,7 +1,0 @@
-{
-  "name": "SoftifyGeo",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
