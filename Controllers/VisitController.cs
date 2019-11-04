@@ -20,6 +20,21 @@ namespace SoftifyGEO.API.Controllers
         private readonly IVisitQuery _visitQuery;
         public VisitController(IVisitQuery visitQuery) { _visitQuery = visitQuery; }
 
+        [HttpGet("GetVisitDetailsByLocCustId")]
+        public IActionResult GetVisitDetailsByLocCustId(int id)
+        {
+            try
+            {
+                var list = _visitQuery.GetVisitDetailsByLocCustId(id);
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // For test purpose
         [HttpGet("GetVisitList")]
         public IActionResult Get( string pageindex ,string pagesize, string searchdata)
         {

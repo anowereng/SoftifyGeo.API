@@ -10,5 +10,6 @@ namespace SoftifyGEO.API.Interfaces
     {
        string GetVisitCustomerList(string pageIndex, string pageSize, string searchdata);
         string GetAllVisitCustomerList(string searchdata, string custtype);
+        string GetVisitDetailsByLocCustId(int id);
     }
 }

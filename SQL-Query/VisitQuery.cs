@@ -42,5 +42,14 @@ namespace SoftifyGEO.API.SQL_Query
             dsList = CoreSQL.CoreSQL_GetDataSet(strQuery);
             return clsCommon.JsonSerialize(dsList.Tables[0]);
         }
+
+        public string GetVisitDetailsByLocCustId(int id)
+        {
+            CoreSQLConnection CoreSQL = new CoreSQLConnection();
+            DataSet dsList = new DataSet();
+            string strQuery = "Exec [prcGet_VisitDetails] '" + id + "' ";
+            dsList = CoreSQL.CoreSQL_GetDataSet(strQuery);
+            return clsCommon.JsonSerialize(dsList.Tables[0]);
+        }
     }
 }
