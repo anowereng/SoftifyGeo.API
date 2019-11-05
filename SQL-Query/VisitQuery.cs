@@ -12,6 +12,7 @@ using System.Security.Claims;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using SoftifyGEO.API.Interfaces;
+using System.Data.SqlTypes;
 
 namespace SoftifyGEO.API.SQL_Query
 {
@@ -33,12 +34,16 @@ namespace SoftifyGEO.API.SQL_Query
             return clsCommon.JsonSerialize(dsList.Tables[0]);
         }
 
-        public string GetAllVisitCustomerList(string searchdata, string custtype)
+        public string GetAllVisitCustomerList(string searchdata, string custtype, string dtfrom, string dtto)
         {
             var userid = _httpContextAccessor.HttpContext.User.GetLoggedInUserId<string>();
             CoreSQLConnection CoreSQL = new CoreSQLConnection();
             DataSet dsList = new DataSet();
-            string strQuery = "Exec [prcGet_VisitCustomerList] '"+userid+"','"+ searchdata + "', '"+ custtype + "' ";
+           
+            //if(searchdata != "undefined") { searchdata = ",@Name='"+searchdata + "'" ; }
+
+
+            string strQuery = "Exec [prcGet_VisitCustomerList]  @UserId = '" + userid + "',  @Name = '"+ searchdata + "', @Type = '" + custtype + "',  @dtFrom = '" + dtfrom + "', @dtTo='" + dtto + "'";
             dsList = CoreSQL.CoreSQL_GetDataSet(strQuery);
             return clsCommon.JsonSerialize(dsList.Tables[0]);
         }

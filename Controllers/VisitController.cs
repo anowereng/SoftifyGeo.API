@@ -50,11 +50,11 @@ namespace SoftifyGEO.API.Controllers
         }
 
         [HttpGet("GetAllVisitCustomer")]
-        public IActionResult GetAllVisitCustomer(string searchdata, string custtype)
+        public IActionResult GetAllVisitCustomer(string searchdata, string custtype, string dtfrom, string dtto)
         {
             try
             {
-                var list = _visitQuery.GetAllVisitCustomerList(searchdata, custtype);
+                var list = _visitQuery.GetAllVisitCustomerList(searchdata, custtype, dtfrom,  dtto);
                 return Ok(list);
             }
             catch (Exception ex)

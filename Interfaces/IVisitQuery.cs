@@ -9,7 +9,7 @@ namespace SoftifyGEO.API.Interfaces
     public interface IVisitQuery
     {
        string GetVisitCustomerList(string pageIndex, string pageSize, string searchdata);
-        string GetAllVisitCustomerList(string searchdata, string custtype);
+        string GetAllVisitCustomerList(string searchdata, string custtype, string dtfrom,  string dtto);
         string GetVisitDetailsByLocCustId(int id);
     }
 }
