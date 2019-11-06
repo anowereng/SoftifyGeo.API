@@ -21,6 +21,8 @@ namespace SoftifyGEO.API.SQL_Query
         public string AttendanceSave(LocationAttendance model)
         {
             var userid = _httpContextAccessor.HttpContext.User.GetLoggedInUserId<string>();
+            if (string.IsNullOrEmpty(userid))
+                throw new InvalidOperationException("User Not found");
             CoreSQLConnection CoreSQL = new CoreSQLConnection();
             ArrayList arrayList = new ArrayList();
             var sqlQuery = "exec prc_AttCheckInOut '" + userid + "','" + model.Type + "','" + model.Latitude + "', '" + model.Longitude + "', '" + model.Address + "'";
@@ -32,6 +34,8 @@ namespace SoftifyGEO.API.SQL_Query
         public double GetAttendanceStatus()
         {
             var userid = _httpContextAccessor.HttpContext.User.GetLoggedInUserId<string>();
+            if (string.IsNullOrEmpty(userid))
+                throw new InvalidOperationException("User Not found");
             CoreSQLConnection CoreSQL = new CoreSQLConnection();
             var Query = "select cast( dbo.fnc_Attendance_Status('" + userid + "') AS float)  AS AttendId";
             var result = CoreSQL.CoreSQL_GetDoubleData(Query);

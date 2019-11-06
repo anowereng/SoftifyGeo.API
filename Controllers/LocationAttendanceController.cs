@@ -23,19 +23,33 @@ namespace SoftifyGEO.API.Controllers
         [HttpPost("AttendanceSave")]
         public IActionResult AttendanceSave([FromBody]LocationAttendance model)
         {
-            if (_attendanceQuery.AttendanceSave(model) == "Success")
-                return Ok();
-            else
-                return BadRequest("Save Failed !!!");
+            try
+            {
+                if (_attendanceQuery.AttendanceSave(model) == "Success")
+                    return Ok();
+                else
+                    return BadRequest("Save Failed !!!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            if (_attendanceQuery.GetAttendanceStatus() == 0)
-                return Ok(JsonConvert.SerializeObject("CheckIn"));
-            else
-                return Ok(JsonConvert.SerializeObject("CheckOut"));
+            try
+            {
+                if (_attendanceQuery.GetAttendanceStatus() == 0)
+                    return Ok(JsonConvert.SerializeObject("CheckIn"));
+                else
+                    return Ok(JsonConvert.SerializeObject("CheckOut"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

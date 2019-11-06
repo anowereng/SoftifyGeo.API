@@ -39,10 +39,8 @@ namespace SoftifyGEO.API.SQL_Query
             var userid = _httpContextAccessor.HttpContext.User.GetLoggedInUserId<string>();
             CoreSQLConnection CoreSQL = new CoreSQLConnection();
             DataSet dsList = new DataSet();
-           
-            //if(searchdata != "undefined") { searchdata = ",@Name='"+searchdata + "'" ; }
-
-
+            if (string.IsNullOrEmpty(userid))
+                throw new InvalidOperationException("User Not found");
             string strQuery = "Exec [prcGet_VisitCustomerList]  @UserId = '" + userid + "',  @Name = '"+ searchdata + "', @Type = '" + custtype + "',  @dtFrom = '" + dtfrom + "', @dtTo='" + dtto + "'";
             dsList = CoreSQL.CoreSQL_GetDataSet(strQuery);
             return clsCommon.JsonSerialize(dsList.Tables[0]);

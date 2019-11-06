@@ -27,6 +27,8 @@ namespace SoftifyGEO.API.SQL_Query
         public string CheckInSave(CustomerCheckInOut model)
         {
             var userid = _httpContextAccessor.HttpContext.User.GetLoggedInUserId<string>();
+            if (string.IsNullOrEmpty(userid))
+                throw new InvalidOperationException("User Not found");
             CoreSQLConnection CoreSQL = new CoreSQLConnection();
             ArrayList arrayList = new ArrayList();
             var Query = "SELECT  cast(Isnull(MAX(LocationCustId),0) + 1 AS float)  AS BinId FROM tbl_Location_Customer";
@@ -42,6 +44,8 @@ namespace SoftifyGEO.API.SQL_Query
         public string GetLastCheckInInfo()
         {
             var userid = _httpContextAccessor.HttpContext.User.GetLoggedInUserId<string>();
+            if (string.IsNullOrEmpty(userid))
+                throw new InvalidOperationException("User Not found");
             CoreSQLConnection CoreSQL = new CoreSQLConnection();
             dsList = new DataSet();
             string strQuery = "Exec [prcGet_CheckOut] '" + userid + "' ";
