@@ -9,5 +9,6 @@ namespace SoftifyGEO.API.Interfaces
     public interface IConveyanceQuery
     {
         string GetConveyType();
+        string SaveConveyance(Conveyance model);
     }
 }

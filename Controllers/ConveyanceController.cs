@@ -34,5 +34,20 @@ namespace SoftifyGEO.API.Controllers
             }
         }
 
+
+        [HttpPost("SaveConveyance")]
+        public IActionResult SaveConveyance([FromBody]Conveyance model)
+        {
+            try
+            {
+                var result = _conveyanceQuery.SaveConveyance(model);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

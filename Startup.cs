@@ -13,6 +13,8 @@ using System.Text;
 using SoftifyGEO.API.SQL_Query;
 using SoftifyGEO.API.Helpers;
 using SoftifyGEO.API.Interfaces;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace SoftifyGEO.API
 {
@@ -99,6 +101,12 @@ namespace SoftifyGEO.API
             app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+            //    RequestPath = new PathString("/Resources")
+            //});
+
             app.UseMvc(routes => routes.MapSpaFallbackRoute(
                 name: "spa-fallback",
                 defaults: new { Controller = "Fallback", action = "Index" }
