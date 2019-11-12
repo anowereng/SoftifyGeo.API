@@ -13,10 +13,10 @@ using SoftifyGEO.API.SQL_Query;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SoftifyGEO.API.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
@@ -77,9 +77,7 @@ namespace SoftifyGEO.API.Controllers
             if (data==null)
                 return StatusCode((int)HttpStatusCode.Unauthorized, "Invalid User Name Or Password !!!");
             ///IF PASSWORD MATCH TOKEN GENERATE
-                return Ok(TokenAdd(data));
-
-               
+                return Ok(TokenAdd(data)); 
         }
 
         public object TokenAdd(User model)
@@ -96,7 +94,7 @@ namespace SoftifyGEO.API.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddMinutes(10),
+                Expires = DateTime.Now.AddYears(10),
                 SigningCredentials = creds
             };
 

@@ -1,4 +1,7 @@
-﻿using Sampan;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Mvc;
+using Sampan;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,8 +19,6 @@ namespace SoftifyGEO.API.Models
         public string Accuracy { get; set; }
         public string Address { get; set; }
         public string Type { get; set; }
-
-
 
     }
 }

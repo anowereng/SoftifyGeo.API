@@ -16,6 +16,7 @@ using SoftifyGEO.API.SQL_Query;
 
 namespace SoftifyGEO.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase

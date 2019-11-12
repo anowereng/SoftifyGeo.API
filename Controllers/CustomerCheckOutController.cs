@@ -19,6 +19,7 @@ using SoftifyGEO.API.Interfaces;
 
 namespace SoftifyGEO.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerChekOutController : Controller
