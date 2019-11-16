@@ -16,22 +16,13 @@ using System.Data.SqlTypes;
 
 namespace SoftifyGEO.API.SQL_Query
 {
-    public class ImageQuery : IImageQuery
+    public class UploadImageQuery : IUploadImageQuery
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-      
-        public ImageQuery(IHttpContextAccessor httpContextAccessor)
+
+        public UploadImageQuery(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
-        }
-
-        public string GetConveyType()
-        {
-            CoreSQLConnection CoreSQL = new CoreSQLConnection();
-            DataSet dsList = new DataSet();
-            string strQuery = "Exec [prcGet_ImageType]";
-            dsList = CoreSQL.CoreSQL_GetDataSet(strQuery);
-            return clsCommon.JsonSerialize(dsList.Tables[0]);
         }
         public string UpdateImage(string pagename, string imagename)
         {
@@ -40,29 +31,31 @@ namespace SoftifyGEO.API.SQL_Query
                 var userid = _httpContextAccessor.HttpContext.User.GetLoggedInUserId<string>();
                 if (string.IsNullOrEmpty(userid))
                     throw new InvalidOperationException("User Not found");
+                else if (string.IsNullOrEmpty(pagename))
+                    throw new InvalidOperationException("Page Name check !!");
                 CoreSQLConnection CoreSQL = new CoreSQLConnection();
                 ArrayList arrayList = new ArrayList();
                 var Query = ""; double NewId = 0; var sqlQuery = "";
                 if (pagename == "attendance")
                 {
-                    Query = "SELECT   cast(Isnull(MAX(LocAttendId),0) + 1 AS float)  AS LocAttendId FROM tbl_Location_Attendance where LUserId = " + userid + " and dtCheckOut = null";
-                    NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
-
-                    sqlQuery = "Update tbl_Location_Attendance set CheckInImage ='" + imagename + "'";
-                    arrayList.Add(sqlQuery);
+                        Query = "SELECT   cast(Isnull(MAX(LocAttendId),0) + 1 AS float)  AS LocAttendId FROM tbl_Location_Attendance where LUserId = " + userid + " and dtCheckOut = null";
+                        NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
+                        sqlQuery = "Update tbl_Location_Attendance set CheckInImage ='" + imagename + "'";
                 }
+                else if (pagename == "custcheckin")
+                {
+                    Query = "SELECT   cast(Isnull(MAX(LocationCustId),0) + 1 AS float)  AS LocationCustId FROM tbl_Location_Customer where LUserId = " + userid + " and dtCheckOutEntry = null";
+                    NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
+                    sqlQuery = "Update tbl_Location_Customer set CheckInImage ='" + imagename + "'";
+                }
+                arrayList.Add(sqlQuery);
                 CoreSQL.CoreSQL_SaveDataUseSQLCommand(arrayList);
                 return "Success";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new InvalidOperationException(ex.Message);
             }
-        }
-
-        public string SaveImage(string pagename)
-        {
-            throw new NotImplementedException();
         }
     }
 }

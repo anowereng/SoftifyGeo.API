@@ -1,0 +1,11 @@
+    {
+      headerName: 'Action2', field: 'SupplierName', width: 100,
+      cellRenderer: (params) => { return '<div> <button (click)="drop()">' + params.value +'</button></div>' }
+    }
+
+RmId = 1802 = expense 
+
+37696 = fuel issue 
+
+
+1839 = fuel Issue 

@@ -30,16 +30,6 @@ namespace SoftifyGEO.API.Helpers
             }
         }
 
-        //public static string getUserId(this ClaimsPrincipal user)
-        //{
-        //    if (!user.Identity.IsAuthenticated)
-
-        //        return null;
-        //    ClaimsPrincipal currentUser = user;
-
-        //    return currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-        //}
         public static string GetLoggedInUserName(this ClaimsPrincipal principal)
         {
             if (principal == null)

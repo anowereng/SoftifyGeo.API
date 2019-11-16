@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoftifyGEO.API.Interfaces
 {
-    public interface IImageQuery
+    public interface IUploadImageQuery
     {
        string UpdateImage(string pagename, string imagename);
     }

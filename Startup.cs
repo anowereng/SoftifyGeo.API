@@ -39,7 +39,7 @@ namespace SoftifyGEO.API
             services.AddSingleton<IAttendanceQuery, AttendanceQuery>();
             services.AddSingleton<IVisitQuery, VisitQuery>();
             services.AddSingleton<IConveyanceQuery, ConveyanceQuery>();
-            services.AddSingleton<IImageQuery, ImageQuery>();
+            services.AddSingleton<IUploadImageQuery, UploadImageQuery>();
 
             services.AddCors(options =>
             {
