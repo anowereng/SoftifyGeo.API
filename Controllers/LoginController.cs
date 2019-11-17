@@ -117,17 +117,27 @@ namespace SoftifyGEO.API.Controllers
         public User GetUserList(string UserName = "", string PassWord = "")
         {
             User model = new User();
-            if (UserName != "007" && PassWord != "007")
+            if (UserName == "007" && PassWord == "007")
             {
+                return model = new User
+                {
+                    LUserId = 1,
+                    UserName = "007",
+                    UserPass = "007",
+                    CatId = 0,
+                    DisplayName = "007",
+                    IsInactive = true,
+                    IsMaster = true,
+                    RefId = 1
+                };
+            }
+            else
+            {
+                model = null;
                 var url = "http://203.80.189.18:5190/acl.sales/LoginUser/GetUserList";
                 string json = new WebClient().DownloadString(url);
                 var listdata = JsonConvert.DeserializeObject<List<User>>(json);
                 model = listdata.Where(x => x.UserName.ToLower() == UserName.ToLower() && x.UserPass == PassWord).FirstOrDefault<User>();
-            }
-            else
-            {
-                return model = new User { LUserId = 1, UserName = "007", UserPass = "007", CatId = 0, DisplayName = "007",
-                                        IsInactive = true, IsMaster = true, RefId = 1 };
             }
             return model;
         }

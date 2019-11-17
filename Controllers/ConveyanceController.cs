@@ -41,7 +41,7 @@ namespace SoftifyGEO.API.Controllers
         {
             try
             {
-                var result = _conveyanceQuery.SaveConveyance(model);
+                _conveyanceQuery.SaveUpdateConveyance(model);
                 return Ok();
             }
             catch (Exception ex)
