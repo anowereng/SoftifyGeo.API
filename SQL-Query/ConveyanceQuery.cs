@@ -34,6 +34,15 @@ namespace SoftifyGEO.API.SQL_Query
             return clsCommon.JsonSerialize(dsList.Tables[0]);
         }
 
+        public string GetConveyInfo(int visitid)
+        {
+            CoreSQLConnection CoreSQL = new CoreSQLConnection();
+            DataSet dsList = new DataSet();
+            string strQuery = "Exec [prcGet_ConveyData] " + visitid;
+            dsList = CoreSQL.CoreSQL_GetDataSet(strQuery);
+            return clsCommon.JsonSerialize(dsList.Tables[0]);
+        }
+
         public void SaveUpdateConveyance(Conveyance model)
         {
             try
