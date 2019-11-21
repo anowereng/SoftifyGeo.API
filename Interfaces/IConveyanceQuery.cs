@@ -11,5 +11,6 @@ namespace SoftifyGEO.API.Interfaces
         string GetConveyType();
         string SaveConveyance(Conveyance model);
         void SaveUpdateConveyance(Conveyance model);
+        string GetConveyInfo(int visitid);
     }
 }

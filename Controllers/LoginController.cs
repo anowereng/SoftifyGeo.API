@@ -85,7 +85,9 @@ namespace SoftifyGEO.API.Controllers
             var claims = new[]
             {
             new Claim(ClaimTypes.NameIdentifier,model.LUserId.ToString()),
-            new Claim(ClaimTypes.Name,model.UserName)
+            new Claim(ClaimTypes.Name,model.UserName),
+            new Claim(ClaimTypes.GivenName,model.DisplayName),
+            new Claim(ClaimTypes.Role,"Test")
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
 
@@ -125,7 +127,8 @@ namespace SoftifyGEO.API.Controllers
                     UserName = "007",
                     UserPass = "007",
                     CatId = 0,
-                    DisplayName = "007",
+                    DisplayName = "Admin",
+                    DesigName = "Administrator",
                     IsInactive = true,
                     IsMaster = true,
                     RefId = 1

@@ -35,6 +35,22 @@ namespace SoftifyGEO.API.Controllers
             }
         }
 
+        [HttpGet("GetConveyInfo")]
+        public IActionResult GetConveyInfo(int visitid)
+        {
+            try
+            {
+                var list = _conveyanceQuery.GetConveyInfo(visitid);
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
 
         [HttpPost("SaveConveyance")]
         public IActionResult SaveConveyance([FromBody]Conveyance model)

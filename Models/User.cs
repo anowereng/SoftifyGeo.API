@@ -16,6 +16,7 @@ namespace SoftifyGEO.API.Models
         public int RefId { get; set; }
         public bool IsInactive { get; set; }
         public bool IsMaster { get; set; }
+        public string DesigName { get; set; }
         public void prcSetData(DataRow dr)
         {
             LUserId = Int32.Parse(dr["LUserId"].ToString());
