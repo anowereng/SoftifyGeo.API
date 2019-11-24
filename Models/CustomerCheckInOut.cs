@@ -21,6 +21,8 @@ namespace SoftifyGEO.API.Models
         public string CheckOutLatitude { get; set; }
         public string CheckOutLongitude { get; set; }
         public string CheckOutAddress { get; set; }
+        public string CheckInDescription { get; set; }
+        public string CheckOutDescription{ get; set; }
 
         public static DataSet dsList = new DataSet();
         public string GetCustomer(string searchdata)

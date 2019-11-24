@@ -14,6 +14,10 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
 using Microsoft.AspNetCore.Authorization;
+using Sampan;
+using System.Collections;
+using System.Data;
+using SoftifyGEO.API.Helpers;
 
 namespace SoftifyGEO.API.Controllers
 {
@@ -87,7 +91,7 @@ namespace SoftifyGEO.API.Controllers
             new Claim(ClaimTypes.NameIdentifier,model.LUserId.ToString()),
             new Claim(ClaimTypes.Name,model.UserName),
             new Claim(ClaimTypes.GivenName,model.DisplayName),
-            new Claim(ClaimTypes.Role,"Test")
+            new Claim(ClaimTypes.Role,model.DesigName)
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
 
@@ -116,6 +120,14 @@ namespace SoftifyGEO.API.Controllers
                 return BadRequest();
 
         }
+        public string GetJsonUserList()
+        {
+            CoreSQLConnection CoreSQL = new CoreSQLConnection();
+            DataSet dsList = new DataSet();
+            string strQuery = "exec [prcGet_UserList] ";
+            dsList = CoreSQL.CoreSQL_GetDataSet(strQuery);
+            return clsCommon.JsonSerialize(dsList.Tables[0]);
+        }
         public User GetUserList(string UserName = "", string PassWord = "")
         {
             User model = new User();
@@ -135,12 +147,21 @@ namespace SoftifyGEO.API.Controllers
                 };
             }
             else
-            {
+             {
                 model = null;
-                var url = "http://203.80.189.18:5190/acl.sales/LoginUser/GetUserList";
-                string json = new WebClient().DownloadString(url);
-                var listdata = JsonConvert.DeserializeObject<List<User>>(json);
-                model = listdata.Where(x => x.UserName.ToLower() == UserName.ToLower() && x.UserPass == PassWord).FirstOrDefault<User>();
+                CoreSQLConnection CoreSQL = new CoreSQLConnection();
+                //var url = "http://203.80.189.18:5190/acl.sales/LoginUser/GetUserList";
+                //var url = "http://202.51.188.186:5190/acl.sales/LoginUser/GetUserList";
+                //string json = new WebClient().DownloadString(url);
+
+                var listdata = JsonConvert.DeserializeObject<List<User>>(GetJsonUserList()).
+                               Where(x=>x.UserName.ToLower() == UserName.ToLower() 
+                               && CoreSQL.GetDecryptedData(x.UserPass) == PassWord)
+                               .FirstOrDefault<User>();
+                if (listdata == null)
+                    return model = null;
+                else
+                    model = listdata;
             }
             return model;
         }

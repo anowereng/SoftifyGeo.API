@@ -51,7 +51,6 @@ namespace SoftifyGEO.API.Controllers
         [HttpPost("CheckIn")]
         public IActionResult CheckIn([FromBody]CustomerCheckInOut model)
         {
-            //var _lQuery = new CheckInQuery();
             try
             {
                 if (model != null)
