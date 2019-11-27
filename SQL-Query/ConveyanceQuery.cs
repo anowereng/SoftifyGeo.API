@@ -74,8 +74,8 @@ namespace SoftifyGEO.API.SQL_Query
             var Query = "SELECT  cast(Isnull(MAX(ConveyId),0) + 1 AS float)  AS ConveyId FROM tblConveyance_Main";
             var NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
 
-            var sqlQuery = "Insert Into tblConveyance_Main(ConveyId, dtConveyance, LUserId, visitid)" +
-                           " Values ('" + NewId + "', getdate(),'" + userid + "','" + model.visitId + "')";
+            var sqlQuery = "Insert Into tblConveyance_Main(ConveyId, dtConveyance, LUserId, visitid ,ConveyDescription)" +
+                           " Values ('" + NewId + "', getdate(),'" + userid + "','" + model.visitId + "',N'" + model.ConveyDescription.Replace("'", "`") + "')";
             arrayList.Add(sqlQuery);
 
             sqlQuery = "Insert Into tblConveyance_Sub(ConveyId, ConveyTypeId, ConveyAmount)" +
@@ -104,12 +104,12 @@ namespace SoftifyGEO.API.SQL_Query
             var sqlQuery = "delete tblConveyance_Sub where ConveyId = '" + ConveyId + "'";
             arrayList.Add(sqlQuery);
 
-            sqlQuery = "Update tblConveyance_Main set dtConveyance = getdate() , LUserId = '" + userid + "' where ConveyId = '" + ConveyId + "'";
+            sqlQuery = "Update tblConveyance_Main set dtConveyance = getdate() , LUserId = '" + userid + "', ConveyDescription= N'" + model.ConveyDescription.Replace("'", "`") + "' where ConveyId = '" + ConveyId + "'";
             arrayList.Add(sqlQuery);
 
             sqlQuery = "Insert Into tblConveyance_Sub(ConveyId, ConveyTypeId, ConveyAmount)" +
                       " Values ('" + ConveyId + "', '" + model.conveyTypeId + "', '" + model.conveyAmount + "')";
-            arrayList.Add(sqlQuery); ;
+            arrayList.Add(sqlQuery);
 
             CoreSQL.CoreSQL_SaveDataUseSQLCommand(arrayList);
             return "Success";

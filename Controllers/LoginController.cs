@@ -45,9 +45,7 @@ namespace SoftifyGEO.API.Controllers
                 if (_lQuery.UserExists(model.UserName))
 
                     return BadRequest("userName already exists, try different name !!");
-
                 else
-
                     _lQuery.CreateUser(model);
                 return Ok();
             }
@@ -158,6 +156,7 @@ namespace SoftifyGEO.API.Controllers
                                Where(x=>x.UserName.ToLower() == UserName.ToLower() 
                                && CoreSQL.GetDecryptedData(x.UserPass) == PassWord)
                                .FirstOrDefault<User>();
+
                 if (listdata == null)
                     return model = null;
                 else

@@ -34,8 +34,8 @@ namespace SoftifyGEO.API.SQL_Query
             var Query = "SELECT  cast(Isnull(MAX(LocationCustId),0) + 1 AS float)  AS BinId FROM tbl_Location_Customer";
             var NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
 
-            var sqlQuery = "Insert Into tbl_Location_Customer(LocationCustId,  CustType, CustId, CustName, LUserId, CheckInlatitude,CheckInlongitude, CheckInAddress, CheckInDescription, CheckOutDescription)" +
-                           " Values ('" + NewId + "','" + model.CustType + "','" + model.CustId + "', '" + model.CustName + "','" + userid + "', '" + model.CheckInLatitude + "' ,'" + model.CheckInLongitude + "',  '" + model.CheckInAddress + "','" + model.CheckInLatitude + "',  '" + model.CheckInDescription + "','" + model.CheckOutDescription + "' )";
+            var sqlQuery = "Insert Into tbl_Location_Customer(LocationCustId,  CustType, CustId, CustName, LUserId, CheckInlatitude,CheckInlongitude, CheckInAddress, CheckInDescription)" +
+                           " Values ('" + NewId + "','" + model.CustType + "','" + model.CustId + "', '" + model.CustName + "','" + userid + "', '" + model.CheckInLatitude + "' ,'" + model.CheckInLongitude + "',  N'" + model.CheckInAddress.Replace("'","`") + "', N'" + model.CheckInDescription.Replace("'", "`") + "')";
             arrayList.Add(sqlQuery);
             CoreSQL.CoreSQL_SaveDataUseSQLCommand(arrayList);
             return "Success";

@@ -16,7 +16,7 @@ namespace SoftifyGEO.API.SQL_Query
         {
             CoreSQLConnection CoreSQL = new CoreSQLConnection();
             ArrayList arrayList = new ArrayList();
-            var sqlQuery = "Update tbl_Location_Customer set CheckOutAddress = '" + model.CheckOutAddress + "', CheckOutLatitude = '" + model.CheckOutLatitude + "', CheckOutLongitude = '" + model.CheckOutLongitude + "', CheckOutDescription = '" + model.CheckOutDescription + "' dtCheckOutEntry = getdate()  where LocationCustId = '" + model.LocationCustId+"'";
+            var sqlQuery = "Update tbl_Location_Customer set CheckOutAddress = N'" + model.CheckOutAddress.Replace("'", "`") + "', CheckOutDescription = N'" + model.CheckOutDescription.Replace("'", "`") + "', CheckOutLatitude = '" + model.CheckOutLatitude + "', CheckOutLongitude = '" + model.CheckOutLongitude + "',  dtCheckOutEntry = getdate()  where LocationCustId = '" + model.LocationCustId+"'";
             arrayList.Add(sqlQuery);
             CoreSQL.CoreSQL_SaveDataUseSQLCommand(arrayList);
             return "Success";

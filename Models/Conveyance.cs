@@ -10,6 +10,7 @@ namespace SoftifyGEO.API.Models
         public string visitId { get; set; }
         public string conveyAmount { get; set; }
         public string conveyTypeId { get; set; }
+        public string ConveyDescription { get; set; }
         //public IList<ConveyanceSub> conveyType { get; set; }
         //public class ConveyanceSub
         //{

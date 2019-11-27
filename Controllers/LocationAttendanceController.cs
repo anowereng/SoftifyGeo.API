@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace SoftifyGEO.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LocationAttendanceController : ControllerBase
