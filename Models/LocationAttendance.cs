@@ -14,10 +14,10 @@ namespace SoftifyGEO.API.Models
     {
         public int AttendanceId { get; set; }
         public string UserId { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
+        public string CheckInLatitude { get; set; }
+        public string CheckInLongitude { get; set; }
         public string Accuracy { get; set; }
-        public string Address { get; set; }
+        public string CheckInAddress { get; set; }
         public string Type { get; set; }
 
     }

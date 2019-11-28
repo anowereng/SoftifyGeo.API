@@ -25,7 +25,7 @@ namespace SoftifyGEO.API.SQL_Query
                 throw new InvalidOperationException("User Not found");
             CoreSQLConnection CoreSQL = new CoreSQLConnection();
             ArrayList arrayList = new ArrayList();
-            var sqlQuery = "exec prc_AttCheckInOut '" + userid + "','" + model.Type + "','" + model.Latitude + "', '" + model.Longitude + "', N'" + model.Address.Replace("'", "`") + "'";
+            var sqlQuery = "exec prc_AttCheckInOut '" + userid + "','" + model.Type + "','" + model.CheckInLatitude + "', '" + model.CheckInLongitude + "', N'" + model.CheckInAddress.Replace("'", "`") + "'";
             arrayList.Add(sqlQuery);
             CoreSQL.CoreSQL_SaveDataUseSQLCommand(arrayList);
             return "Success";
