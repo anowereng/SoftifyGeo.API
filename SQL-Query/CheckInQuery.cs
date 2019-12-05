@@ -29,8 +29,13 @@ namespace SoftifyGEO.API.SQL_Query
             var userid = _httpContextAccessor.HttpContext.User.GetLoggedInUserId<string>();
             if (string.IsNullOrEmpty(userid))
                 throw new InvalidOperationException("User Not found");
+
+            if (GetReadyForNewCheckIn() != 0)
+                throw new InvalidOperationException("already exist data !! ");
+
             CoreSQLConnection CoreSQL = new CoreSQLConnection();
             ArrayList arrayList = new ArrayList();
+
             var Query = "SELECT  cast(Isnull(MAX(LocationCustId),0) + 1 AS float)  AS BinId FROM tbl_Location_Customer";
             var NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
 

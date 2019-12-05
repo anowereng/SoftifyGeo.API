@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SoftifyGEO.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UploadImageController : Controller
@@ -33,7 +33,6 @@ namespace SoftifyGEO.API.Controllers
                 var file = Request.Form.Files[0];
                 var folderName = Path.Combine("Resources", "Images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-
                 if (file.Length > 0)
                 {
                     var userid = _httpContextAccessor.HttpContext.User.GetLoggedInUserId<string>();
