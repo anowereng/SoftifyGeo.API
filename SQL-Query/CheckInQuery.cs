@@ -58,6 +58,19 @@ namespace SoftifyGEO.API.SQL_Query
             return clsCommon.JsonSerialize(dsList.Tables[0]);
         }
 
+        public string GetTotalVisitDay()
+        {
+            var userid = _httpContextAccessor.HttpContext.User.GetLoggedInUserId<string>();
+            if (string.IsNullOrEmpty(userid))
+                throw new InvalidOperationException("User Not found");
+            CoreSQLConnection CoreSQL = new CoreSQLConnection();
+            dsList = new DataSet();
+            string strQuery = "Exec [prcGet_DayVisit] '" + userid + "' ";
+            dsList = CoreSQL.CoreSQL_GetDataSet(strQuery);
+            return clsCommon.JsonSerialize(dsList.Tables[0]);
+        }
+
+
 
         public double GetReadyForNewCheckIn()
         {

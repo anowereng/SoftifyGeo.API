@@ -11,5 +11,6 @@ namespace SoftifyGEO.API.Interfaces
         string CheckInSave(CustomerCheckInOut model);
         string GetLastCheckInInfo();
         double GetReadyForNewCheckIn();
+        string GetTotalVisitDay();
     }
 }

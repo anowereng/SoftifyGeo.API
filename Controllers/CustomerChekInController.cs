@@ -25,7 +25,7 @@ namespace SoftifyGEO.API.Controllers
     public class CustomerChekInController : Controller
     {
         private readonly ICheckInQuery _checkInQuery;
-        public CustomerChekInController(ICheckInQuery checkInQuery){ _checkInQuery = checkInQuery;}
+        public CustomerChekInController(ICheckInQuery checkInQuery) { _checkInQuery = checkInQuery; }
 
         [HttpGet("{searchdata}")]
         public ActionResult Get(string searchdata = "")
@@ -47,6 +47,22 @@ namespace SoftifyGEO.API.Controllers
             else
                 return Ok(JsonConvert.SerializeObject(true));
         }
+
+
+        [HttpGet("GetTotalVisitDay")]
+        public IActionResult GetTotalVisitDay()
+        {
+            try
+            {
+                var result = _checkInQuery.GetTotalVisitDay();
+                return Ok(result);
+            }
+            catch (Exception ex) {
+                return BadRequest(ex.Message); 
+            };
+        }
+
+
 
         [HttpPost("CheckIn")]
         public IActionResult CheckIn([FromBody]CustomerCheckInOut model)
