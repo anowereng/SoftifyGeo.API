@@ -36,7 +36,7 @@ namespace SoftifyGEO.API.SQL_Query
             var Query = "SELECT cast(Isnull(MAX(FuelIssueId),0) + 1 AS float)  AS FuelIssueId FROM tbl_FuelIssue";
             var NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
 
-            var sqlQuery = "Insert Into tbl_Location_Customer(FuelIssueId, dtFuel, Description, FuelAmount, UserId)" +
+            var sqlQuery = "Insert Into tbl_FuelIssue(FuelIssueId, dtFuel, Description, FuelAmount, UserId)" +
                            " Values ('" + NewId + "','" + model.dtFuel + "', N'" + model.Description.Replace("'", "`") + "', '" + model.FuelAmount + "','" + userid + "')";
             arrayList.Add(sqlQuery);
             CoreSQL.CoreSQL_SaveDataUseSQLCommand(arrayList);

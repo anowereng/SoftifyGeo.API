@@ -27,8 +27,8 @@ namespace SoftifyGEO.API.Controllers
         private readonly IFuelQuery _fuelQuery;
         public FuelController(IFuelQuery fuelQuery){ _fuelQuery = fuelQuery;}
 
-        [HttpPost("Fuel")]
-        public IActionResult Fuel([FromBody]Fuel model)
+        [HttpPost("FuelSave")]
+        public IActionResult FuelSave([FromBody]Fuel model)
         {
             try
             {
