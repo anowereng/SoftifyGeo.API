@@ -43,9 +43,13 @@ namespace SoftifyGEO.API.SQL_Query
             return "Success";
         }
 
-        public string GetFuelList()
+        public string GetFuelList(string searchdata)
         {
-            throw new NotImplementedException();
+            var userid = _httpContextAccessor.HttpContext.User.GetLoggedInUserId<string>();
+            CoreSQLConnection CoreSQL = new CoreSQLConnection();
+            string strQuery = "Exec [prcDynamic_FuelList]  @userId = '" + userid+ "', @SearchData ='" + searchdata + "' ";
+            dsList = CoreSQL.CoreSQL_GetDataSet(strQuery);
+            return clsCommon.JsonSerialize(dsList.Tables[0]);
         }
     }
 }

@@ -9,6 +9,6 @@ namespace SoftifyGEO.API.Interfaces
     public interface IFuelQuery 
     {
         string FuelSave(Fuel model);
-        string GetFuelList();
+        string GetFuelList(string searchdata);
     }
 }

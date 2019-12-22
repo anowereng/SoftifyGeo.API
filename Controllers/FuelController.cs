@@ -25,7 +25,7 @@ namespace SoftifyGEO.API.Controllers
     public class FuelController : Controller
     {
         private readonly IFuelQuery _fuelQuery;
-        public FuelController(IFuelQuery fuelQuery){ _fuelQuery = fuelQuery;}
+        public FuelController(IFuelQuery fuelQuery) { _fuelQuery = fuelQuery; }
 
         [HttpPost("FuelSave")]
         public IActionResult FuelSave([FromBody]Fuel model)
@@ -41,6 +41,17 @@ namespace SoftifyGEO.API.Controllers
                 {
                     return BadRequest();
                 }
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); };
+        }
+
+        [HttpGet("FuelList")]
+        public IActionResult FuelList(string searchdata)
+        {
+            try
+            {
+                var list = _fuelQuery.GetFuelList(searchdata);
+                return Ok(list);
             }
             catch (Exception ex) { return BadRequest(ex.Message); };
         }
