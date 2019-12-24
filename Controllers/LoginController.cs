@@ -36,8 +36,6 @@ namespace SoftifyGEO.API.Controllers
         [HttpPost("Register")]
         public IActionResult Register([FromBody] User model)
         {
-            // throw new Exception("Computer Syas NO !!!");
-
             model.UserName = model.UserName.ToLower();
 
             if (ModelState.IsValid)
@@ -58,6 +56,18 @@ namespace SoftifyGEO.API.Controllers
             }
         }
 
+        [HttpPost("UpdateProfile")]
+        public IActionResult UpdateProfile(User model)
+        {
+            try
+            {
+                _lQuery.UpdateProfile(model);
+                return Ok(); 
+            }
+            catch(Exception ex) { return BadRequest(ex.Message); }
+
+        }
+
         [HttpPost("SupplierSave")]
         public IActionResult SupplierSave([FromBody] Supplier model)
         {
@@ -75,11 +85,11 @@ namespace SoftifyGEO.API.Controllers
         [HttpPost("Login")]
         public IActionResult Login(User model)
         {
-            var  data = GetUserList(model.UserName, model.UserPass);
-            if (data==null)
+            var data = GetUserList(model.UserName, model.UserPass);
+            if (data == null)
                 return StatusCode((int)HttpStatusCode.Unauthorized, "Invalid User Name Or Password !!!");
             ///IF PASSWORD MATCH TOKEN GENERATE
-                return Ok(TokenAdd(data)); 
+            return Ok(TokenAdd(data));
         }
 
         public object TokenAdd(User model)
@@ -89,7 +99,8 @@ namespace SoftifyGEO.API.Controllers
             new Claim(ClaimTypes.NameIdentifier,model.LUserId.ToString()),
             new Claim(ClaimTypes.Name,model.UserName),
             new Claim(ClaimTypes.GivenName,model.DisplayName),
-            new Claim(ClaimTypes.Role,model.DesigName)
+            new Claim(ClaimTypes.Role,model.DesigName),
+            new Claim(ClaimTypes.Surname,model.OldPassword)
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
 
@@ -145,7 +156,7 @@ namespace SoftifyGEO.API.Controllers
                 };
             }
             else
-             {
+            {
                 model = null;
                 CoreSQLConnection CoreSQL = new CoreSQLConnection();
                 //var url = "http://203.80.189.18:5190/acl.sales/LoginUser/GetUserList";
@@ -153,14 +164,20 @@ namespace SoftifyGEO.API.Controllers
                 //string json = new WebClient().DownloadString(url);
 
                 var listdata = JsonConvert.DeserializeObject<List<User>>(GetJsonUserList()).
-                               Where(x=>x.UserName.ToLower() == UserName.ToLower() 
+                               Where(x => x.UserName.ToLower() == UserName.ToLower()
                                && CoreSQL.GetDecryptedData(x.UserPass) == PassWord)
                                .FirstOrDefault<User>();
 
                 if (listdata == null)
+                {
                     return model = null;
+                }
                 else
+                {
                     model = listdata;
+                    model.OldPassword = CoreSQL.GetDecryptedData(model.UserPass);
+                }
+
             }
             return model;
         }
