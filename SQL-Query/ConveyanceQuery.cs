@@ -74,6 +74,8 @@ namespace SoftifyGEO.API.SQL_Query
             var Query = "SELECT  cast(Isnull(MAX(ConveyId),0) + 1 AS float)  AS ConveyId FROM tblConveyance_Main";
             var NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
 
+            if (String.IsNullOrEmpty(model.ConveyDescription))
+                model.ConveyDescription = "";
             var sqlQuery = "Insert Into tblConveyance_Main(ConveyId, dtConveyance, LUserId, visitid ,ConveyDescription)" +
                            " Values ('" + NewId + "', getdate(),'" + userid + "','" + model.visitId + "',N'" + model.ConveyDescription.Replace("'", "`") + "')";
             arrayList.Add(sqlQuery);
