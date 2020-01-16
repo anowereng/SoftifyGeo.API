@@ -40,7 +40,7 @@ namespace SoftifyGEO.API.SQL_Query
             var NewId = CoreSQL.CoreSQL_GetDoubleData(Query);
 
             var sqlQuery = "Insert Into tbl_Location_Customer(LocationCustId,  CustType, CustId, CustName, LUserId, CheckInlatitude,CheckInlongitude, CheckInAddress, CheckInDescription)" +
-                           " Values ('" + NewId + "','" + model.CustType + "','" + model.CustId + "', '" + model.CustName + "','" + userid + "', '" + model.CheckInLatitude + "' ,'" + model.CheckInLongitude + "',  N'" + model.CheckInAddress.Replace("'","`") + "', N'" + model.CheckInDescription.Replace("'", "`") + "')";
+                           " Values ('" + NewId + "','" + model.CustType + "','" + model.CustId + "', N'" + model.CustName.Replace("'", "`") + "','" + userid + "', '" + model.CheckInLatitude + "' ,'" + model.CheckInLongitude + "',  N'" + model.CheckInAddress.Replace("'","`") + "', N'" + model.CheckInDescription.Replace("'", "`") + "')";
             arrayList.Add(sqlQuery);
             CoreSQL.CoreSQL_SaveDataUseSQLCommand(arrayList);
             return "Success";
