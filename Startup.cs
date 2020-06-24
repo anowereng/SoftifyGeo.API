@@ -16,6 +16,7 @@ using SoftifyGEO.API.Interfaces;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 
+
 namespace SoftifyGEO.API
 {
     public class Startup
@@ -42,6 +43,7 @@ namespace SoftifyGEO.API
             services.AddSingleton<IUploadImageQuery, UploadImageQuery>();
             services.AddSingleton<IFuelQuery, FuelQuery>();
             services.AddSingleton<ILoginQuery, LoginQuery>();
+            services.AddSingleton<IBackgroundLocQuery, BackgroundLocQuery>();
 
             services.AddCors(options =>
             {
